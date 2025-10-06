@@ -41,7 +41,7 @@ Source Location: https://github.com/EzechielXae/SegaCd_BackupRam
 - AS6C4008-55 (512K×8 SRAM)
 - AO3407 (P-MOSFET, SOT-23) ×2
 - MMBT2222A or MMBT3904 (NPN, SOT-23) ×3 (CE#/OE#/WE#)
-- 74HCT04, 74HCT138, 74HCT30, 74HCT32, 74HCT245
+- 74HCT04, 74HCT138, 74HCT30, 74HCT32, 74HCT245 (ONLY Package SOIC 14, 16 and 20)
 - Coin-cell holder **CR2032** or **CR2450**
 - Caps: 100 nF per IC, **10 µF MLCC** near SRAM, **47–68 µF** bulk on +5V_SYS
 - Resistors: **10 kΩ** (NPN base), **100 kΩ** (base-to-GND), **470 kΩ** (pull-ups to VCC_SRAM)
