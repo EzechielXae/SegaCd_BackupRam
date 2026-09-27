@@ -66,9 +66,9 @@ I recommend getting ENIG and Gold, but HASL will work also
 
 ## Bill of Materials
 
-- **[PDF BOM](https://github.com/EzechielXae/SegaCd_BackupRam/Bom/BOM_SEGA-BackUp-Ram_rev1.2.pdf)**
+- **[PDF BOM](./Bom/BOM_SEGA-BackUp-Ram_rev1.2.pdf)**
 
-- **[Interractive BOM](https://github.com/EzechielXae/SegaCd_BackupRam/Bom/PCB_SEGA-BackUp-Ram_rev1.2.html)**
+- **[Interractive BOM](./Bom/PCB_SEGA-BackUp-Ram_rev1.2.html)**
 
 
 ---
