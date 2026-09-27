@@ -17,34 +17,59 @@ Focus: **ultra-low standby current**, **no backfeed**, **clean bus interface**, 
 - **Two power rails**:
   - `+5V`: console/logic only.
   - `3V Battery`: battery-backed rail for **SRAM only**.
-- **Clean controls**: CE#/OE#/WE# driven **open-drain (NPN)** via **74HCT04** (inversion) → **no leakage** when console is off.
+  - **Clean controls**: CE#/OE#/WE# driven through a **74LVC07A non-inverting open-drain buffer**, with pull-ups to VccRam. Its partial-power-down / Ioff behavior prevents back-powering the console logic when the console is off.
 - Designed in **EasyEDA** (schematic JSON in repo).
+
+---
+
+## Revision 1.0
+
+Rev 1.0 was the first hardware revision using the AS6C4008 low-power SRAM with battery backup.
+CE#/OE#/WE# were isolated from the console logic using a 74HCT04 + NPN open-collector interface to prevent backfeed when the console was powered off.
+
+---
+
+## Revision 1.2
+
+In Rev1.0 : The memory architecture and address decoding were functional, but this control stage introduced excessive delay on the SRAM control signals, causing the Mega-CD to reset when accessing cartridge memory.
+
+Rev 1.2 replaces the previous 74HCT04 + NPN open-collector
+CE#/OE#/WE# interface with a 74LVC07A non-inverting open-drain buffer.
+
+Direct CE#/OE#/WE# wiring was validated on real hardware for detection,
+formatting, read and write operations.
+The 74LVC07A restores battery-domain isolation while preserving fast bus timing.
 
 ---
 
 ## Battery Life (rule-of-thumb)
 
-|      | **CR2032 (220 mAh)**                                             | **CR2450 (600 mAh)**                       |
-|------|------------------------------------------------------------|-------------------------------------|
-| 2 µA | ~**12.6 years** (realistic: **~5–10 years** due to self-discharge) | ~**34 years** (realistic: **~10–15 years**) |
+| Standby current | **CR2032 (220 mAh)** | **CR2450 (600 mAh)** |
+|---|---:|---:|
+| 2 µA | ~12.6 years theoretical | ~34 years theoretical |
+| 4 µA | ~6.3 years theoretical | ~17 years theoretical |
+
+
+In practice, coin-cell self-discharge and leakage currents will reduce these figures.
+A realistic target is roughly **5 years with a CR2032**.
 
 ---
 
 ## Build & Files
 
-- **EasyEDA** schematic JSON: includes description with SPDX line:
-SPDX-License-Identifier: CERN-OHL-S-2.0
-Source Location: https://github.com/EzechielXae/SegaCd_BackupRam
+Minimum track widths, clearances and via sizes are within the standard offering of modern PCB fabricators. Development was done using EasyEDA/JLCPCB and as such the Gerber files are provided to their specification.
 
-- **Gerbers**: generate from PCB project (once routed).
-- **BOM** (key parts):
-- AS6C4008-55 (512K×8 SRAM)
-- AO3407 (P-MOSFET, SOT-23) ×2
-- MMBT2222A or MMBT3904 (NPN, SOT-23) ×3 (CE#/OE#/WE#)
-- 74HCT04, 74HCT138, 74HCT30, 74HCT32, 74HCT245 (ONLY Package SOIC 14, 16 and 20)
-- Coin-cell holder **CR2032** or **CR2450**
-- Caps: 100 nF per IC, **10 µF MLCC** near SRAM, **47–68 µF** bulk on +5V_SYS
-- Resistors: **10 kΩ** (NPN base), **100 kΩ** (base-to-GND), **470 kΩ** (pull-ups to VCC_SRAM)
+The design is verified to work as a 2-layer PCB.
+I recommend getting ENIG and Gold, but HASL will work also
+
+---
+
+## Bill of Materials
+
+- **[PDF BOM](https://github.com/EzechielXae/SegaCd_BackupRam/Bom/BOM_SEGA-BackUp-Ram_rev1.2.pdf)**
+
+- **[Interractive BOM](https://github.com/EzechielXae/SegaCd_BackupRam/Bom/PCB_SEGA-BackUp-Ram_rev1.2.html)**
+
 
 ---
 
